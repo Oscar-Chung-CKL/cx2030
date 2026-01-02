@@ -4,25 +4,23 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Conference 2025</title>
+  <title>Move Beyond Conference 2026</title>
   <style>
     :root {
-      --bg: #0f172a;         /* Slate-900 */
-      --card: #111827;       /* Slate-800 */
-      --primary: #3b82f6;    /* Blue-500 */
-      --primary-600: #2563eb;
-      --text: #e5e7eb;       /* Slate-200 */
-      --muted: #9ca3af;      /* Slate-400 */
-      --accent: #22c55e;     /* Green-500 */
+      --bg: #005E62;                 /* Main background */
+      --card: rgba(17, 24, 39, 0.75);
+      --button-bg: rgb(111,160,136); /* Button background */
+      --text: #ffffff;               /* General text */
+      --muted: #d1d5db;
     }
 
     * { box-sizing: border-box; }
     html, body {
       height: 100%;
       margin: 0;
-      background: linear-gradient(180deg, var(--bg), #0b1024 60%, #0a0f1f);
+      background: var(--bg);
       color: var(--text);
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
     }
 
     .container {
@@ -37,24 +35,32 @@
       padding: 2rem 1rem 1rem;
     }
 
+    /* Gradient title (first line) */
     .title {
       font-size: clamp(2rem, 4vw, 3rem);
       font-weight: 800;
-      letter-spacing: 0.02em;
       margin: 0;
-      line-height: 1.1;
+      line-height: 1.2;
       background: linear-gradient(90deg, #93c5fd, #60a5fa 40%, #22c55e 90%);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
     }
 
+    /* Subtitle (second line) with two spans to control line break on mobile */
     .subtitle {
-      margin-top: 0.5rem;
-      color: var(--muted);
-      font-size: clamp(0.95rem, 2vw, 1.1rem);
+      margin-top: 0.75rem;
+      font-size: clamp(1.6rem, 3.6vw, 2.4rem);
+      font-weight: 600;
+      color: var(--text);
+      display: inline-block;           /* So mobile block lines center nicely */
+    }
+    .subtitle .line1,
+    .subtitle .line2 {
+      display: inline;                 /* Default: single line on larger screens */
     }
 
+    /* Main content area */
     main {
       display: grid;
       place-items: center;
@@ -63,50 +69,52 @@
 
     .card {
       width: min(760px, 92vw);
-      background: rgba(17, 24, 39, 0.75);
+      background: var(--card);
       backdrop-filter: blur(8px);
-      border: 1px solid rgba(148, 163, 184, 0.12);
       border-radius: 16px;
       padding: clamp(1.5rem, 2.5vw, 2rem);
-      box-shadow:
-        0 20px 25px -5px rgba(0,0,0,0.45),
-        0 8px 10px -6px rgba(0,0,0,0.4);
       text-align: center;
     }
 
+    /* Button and image centering */
     .big-button {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
       width: min(520px, 85vw);
-      padding: clamp(1rem, 3vw, 1.25rem) clamp(1.25rem, 5vw, 1.75rem);
-      font-size: clamp(1.25rem, 3.2vw, 1.6rem);
-      font-weight: 700;
+      padding: clamp(0.75rem, 2.5vw, 1rem);
       border: none;
       border-radius: 12px;
-      color: white;
-      background: linear-gradient(180deg, var(--primary), var(--primary-600));
+      background: var(--button-bg);
       cursor: pointer;
       transition: transform 120ms ease, filter 120ms ease, box-shadow 150ms ease;
-      box-shadow: 0 10px 18px rgba(59, 130, 246, 0.35);
-      will-change: transform;
+      box-shadow: 0 10px 18px rgba(0,0,0,0.35);
     }
     .big-button:focus-visible {
-      outline: 3px solid #93c5fd;
+      outline: 3px solid rgba(255,255,255,0.7);
       outline-offset: 3px;
     }
     .big-button:hover {
       transform: translateY(-2px);
-      filter: brightness(1.08);
-      box-shadow: 0 14px 22px rgba(59, 130, 246, 0.42);
+      filter: brightness(1.05);
+      box-shadow: 0 14px 22px rgba(0,0,0,0.4);
     }
     .big-button:active {
       transform: translateY(0);
       filter: brightness(0.98);
-      box-shadow: 0 8px 14px rgba(59, 130, 246, 0.28);
+      box-shadow: 0 8px 14px rgba(0,0,0,0.3);
     }
 
+    .big-button img {
+      display: block;
+      width: min(420px, 70vw);
+      height: auto;
+      max-height: 320px;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25));
+    }
+
+    /* Counter area */
     .counter {
       margin-top: clamp(1rem, 3vw, 1.5rem);
       display: grid;
@@ -117,14 +125,12 @@
     .count-label {
       color: var(--muted);
       font-size: clamp(0.95rem, 2.2vw, 1.05rem);
-      letter-spacing: 0.01em;
     }
 
     .count-value {
       font-size: clamp(2.2rem, 6vw, 3rem);
       font-weight: 800;
       color: #93c5fd;
-      text-shadow: 0 2px 10px rgba(147, 197, 253, 0.25);
     }
 
     .reset {
@@ -151,10 +157,26 @@
       font-size: 0.9rem;
     }
 
-    /* Reduced motion accessibility */
-    @media (prefers-reduced-motion: reduce) {
-      .big-button {
-        transition: none;
+    /* Mobile: force subtitle to break into two lines and center */
+    @media (max-width: 640px) {
+      .subtitle .line1,
+      .subtitle .line2 {
+        display: block;            /* Simulate <br> */
+        text-align: center;        /* Ensure centered on mobile */
+      }
+      .subtitle {
+        line-height: 1.25;
+      }
+
+      /* Tighten vertical spacing for mobile */
+      header {
+        padding: 1.5rem 1rem 0.75rem;
+      }
+
+      /* Ensure button stays centered and fits nicely */
+      .big-button img {
+        width: min(360px, 80vw);
+        max-height: 280px;
       }
     }
   </style>
@@ -162,8 +184,12 @@
 <body>
   <div class="container">
     <header>
-           <h1 class="title">Conference 2025</h1>
-      <p class="subtitle" id="subtitle" aria-live="polite">Welcome! Tap the button to participate.</p>
+      <h1 class="title">Move Beyond Conference 2026</h1>
+      <!-- Subtitle split into two spans so we can force a line break on mobile -->
+      <p class="subtitle">
+        <span class="line1">Winning Hearts</span>
+        <span class="line2">by Creating Value</span>
+      </p>
     </header>
 
     <main>
@@ -172,13 +198,9 @@
           Conference interaction
         </h2>
 
-        <button
-          id="actionBtn"
-          class="big-button"
-          type="button"
-          aria-label="Click to participate in Conference 2025"
-        >
-          <span aria-hidden="true">Click Me</span>
+        <!-- Heart image button (image file must be in the same folder) -->
+        <button id="actionBtn" class="big-button" type="button" aria-label="Click to participate in Conference 2026">
+          <img src="heart.png" alt="Heart icon for participation" />
         </button>
 
         <div class="counter" aria-live="polite" aria-atomic="true">
@@ -192,19 +214,17 @@
     </main>
 
     <footer>
-      © 2025 Conference. All rights reserved.
+      © 2026 Conference. All rights reserved.
     </footer>
   </div>
 
   <script>
-    // --- Simple persistent counter with localStorage ---
-    const STORAGE_KEY = "conference2025_click_count";
+    const STORAGE_KEY = "conference2026_click_count";
     const countEl = document.getElementById("countValue");
     const btn = document.getElementById("actionBtn");
     const resetBtn = document.getElementById("resetBtn");
-    const subtitleEl = document.getElementById("subtitle");
+    const subtitleEl = document.querySelector(".subtitle");
 
-    // Initialize count from storage (default to 0 if missing or invalid)
     function getStoredCount() {
       const raw = localStorage.getItem(STORAGE_KEY);
       const n = Number(raw);
@@ -217,16 +237,26 @@
 
     function renderCount(n) {
       countEl.textContent = n.toLocaleString();
-      subtitleEl.textContent = n === 0
-        ? "Welcome! Tap the button to participate."
-        : `Thanks for participating! ${n.toLocaleString()} clicks so far.`;
+
+      // Optional: dynamic second line message after clicks (keeps mobile break behavior intact)
+      const baseHTML = `
+        <span class="line1">Winning Hearts</span>
+        <span class="line2">by Creating Value</span>
+      `;
+      if (n === 0) {
+        subtitleEl.innerHTML = baseHTML;
+      } else {
+        subtitleEl.innerHTML = `
+          ${baseHTML}
+          <br>
+          <span style="font-size:1rem;color:#d1d5db;">Thanks for participating! ${n.toLocaleString()} clicks so far.</span>
+        `;
+      }
     }
 
-    // Load initial state
     let count = getStoredCount();
     renderCount(count);
 
-    // Click handler
     btn.addEventListener("click", () => {
       count += 1;
       setStoredCount(count);
@@ -243,14 +273,12 @@
       );
     });
 
-    // Reset handler
     resetBtn.addEventListener("click", () => {
       count = 0;
       setStoredCount(count);
       renderCount(count);
     });
-
-    // Keyboard accessibility: Enter/Space should click (already default for button)
-    // No extra code needed, but we ensure focus styles are visible via CSS.
   </script>
 </body>
+</html>
+``
