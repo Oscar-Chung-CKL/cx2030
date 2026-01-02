@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,10 +6,10 @@
   <title>Move Beyond Conference 2026</title>
   <style>
     :root {
-      --bg: #005E62;
+      --bg: #005E62;                 /* Main background */
       --card: rgba(17, 24, 39, 0.75);
-      --button-bg: rgb(111,160,136);
-      --text: #ffffff;
+      --button-bg: rgb(111,160,136); /* Button background */
+      --text: #ffffff;               /* General text */
       --muted: #d1d5db;
     }
 
@@ -21,16 +20,15 @@
       background: var(--bg);
       color: var(--text);
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
     }
 
+    /* Center everything in the viewport */
     .container {
-      flex: 1; /* Take remaining space */
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: center; /* Center vertically */
-      align-items: center; /* Center horizontally */
+      align-items: center;
+      justify-content: center; /* Vertical centering */
       text-align: center;
       padding: 1rem;
     }
@@ -43,6 +41,7 @@
       font-size: clamp(2rem, 4vw, 3rem);
       font-weight: 800;
       margin: 0;
+      line-height: 1.2;
       background: linear-gradient(90deg, #93c5fd, #60a5fa 40%, #22c55e 90%);
       -webkit-background-clip: text;
       background-clip: text;
@@ -54,6 +53,11 @@
       font-size: clamp(1.6rem, 3.6vw, 2.4rem);
       font-weight: 600;
       color: var(--text);
+      display: inline-block;
+    }
+    .subtitle .line1,
+    .subtitle .line2 {
+      display: inline;
     }
 
     .card {
@@ -75,20 +79,28 @@
       align-items: center;
       justify-content: center;
       margin: 0 auto;
-      width: min(520px, 85vw);
-      padding: clamp(0.75rem, 2.5vw, 1rem);
+      width: min(520px, 92vw);
+      padding: clamp(1rem, 5vw, 1.5rem);
       border: none;
       border-radius: 12px;
       background: var(--button-bg);
       cursor: pointer;
+      transition: transform 120ms ease, filter 120ms ease, box-shadow 150ms ease;
+      box-shadow: 0 10px 18px rgba(0,0,0,0.35);
+    }
+
+    .big-button:hover {
+      transform: scale(1.03);
+      filter: brightness(1.1);
     }
 
     .big-button img {
       display: block;
-      width: min(420px, 70vw);
+      width: 100%;
+      max-width: min(420px, 80vw);
       height: auto;
-      max-height: 320px;
       object-fit: contain;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
     }
 
     .counter {
@@ -109,17 +121,37 @@
       color: #93c5fd;
     }
 
+    .reset {
+      margin-top: 0.75rem;
+      font-size: 0.95rem;
+      color: #a3a3a3;
+      background: transparent;
+      border: 1px dashed rgba(148, 163, 184, 0.25);
+      padding: 0.5rem 0.9rem;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
     footer {
-      text-align: center;
-      padding: 1rem;
+      margin-top: 1.5rem;
       color: var(--muted);
       font-size: 0.9rem;
     }
 
+    /* Mobile adjustments */
     @media (max-width: 640px) {
-      .subtitle {
+      .subtitle .line1,
+      .subtitle .line2 {
         display: block;
-        line-height: 1.3;
+        text-align: center;
+      }
+      .subtitle {
+        font-size: clamp(1.4rem, 5vw, 2rem);
+      }
+      
+      .big-button {
+        width: min(520px, 95vw);
+        padding: clamp(1.2rem, 6vw, 1.8rem);
       }
     }
   </style>
@@ -128,59 +160,45 @@
   <div class="container">
     <header>
       <h1 class="title">Move Beyond Conference 2026</h1>
-      <p class="subtitle">Winning Hearts<br>by Creating Value</p>
+      <div class="subtitle">
+        <span class="line1">Winning Hearts</span>
+        <span class="line2">by Creating Value</span>
+      </div>
     </header>
 
-    <section class="card">
-      <button id="actionBtn" class="big-button" type="button" aria-label="Click to participate">
+    <div class="card">
+      <button class="big-button" id="register-btn">
         <img src="heart.png" alt="Heart icon" />
       </button>
 
       <div class="counter">
         <div class="count-label">Total button clicks</div>
-        <div class="count-value" id="countValue">0</div>
-        <button class="reset" id="resetBtn" type="button">Reset counter</button>
+        <div class="count-value" id="count">0</div>
+        <button class="reset" id="reset-btn">Reset Counter</button>
       </div>
-    </section>
+    </div>
+
+    <footer>
+      &copy; 2026 Move Beyond Conference. All rights reserved.
+    </footer>
   </div>
 
-  <footer>
-    © 2026 Conference. All rights reserved.
-  </footer>
-
   <script>
-    const STORAGE_KEY = "conference2026_click_count";
-    const countEl = document.getElementById("countValue");
-    const btn = document.getElementById("actionBtn");
-    const resetBtn = document.getElementById("resetBtn");
-
-    function getStoredCount() {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      const n = Number(raw);
-      return Number.isFinite(n) && n >= 0 ? n : 0;
-    }
-
-    function setStoredCount(n) {
-      localStorage.setItem(STORAGE_KEY, String(n));
-    }
-
-    function renderCount(n) {
-      countEl.textContent = n.toLocaleString();
-    }
-
-    let count = getStoredCount();
-    renderCount(count);
-
-    btn.addEventListener("click", () => {
-      count += 1;
-      setStoredCount(count);
-      renderCount(count);
+    // Simple demo counter – click the button to increment
+    const countEl = document.getElementById('count');
+    const btn = document.getElementById('register-btn');
+    const resetBtn = document.getElementById('reset-btn');
+    
+    let count = 0;
+    
+    btn.addEventListener('click', () => {
+      count++;
+      countEl.textContent = count.toLocaleString();
     });
-
-   ck", () => {
+    
+    resetBtn.addEventListener('click', () => {
       count = 0;
-      setStoredCount(count);
-      renderCount(count);
+      countEl.textContent = '0';
     });
   </script>
 </body>
