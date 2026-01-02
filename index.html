@@ -23,16 +23,19 @@
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
     }
 
+    /* Center everything in the viewport */
     .container {
-      min-height: 100%;
-      display: grid;
-      grid-template-rows: auto 1fr auto;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
       align-items: center;
+      justify-content: center; /* Vertical centering */
+      text-align: center;
+      padding: 1rem;
     }
 
     header {
-      text-align: center;
-      padding: 2rem 1rem 1rem;
+      margin-bottom: 1.5rem;
     }
 
     .title {
@@ -58,32 +61,25 @@
       display: inline;
     }
 
-    main {
-      display: grid;
-      place-items: center;
-      padding: 2rem 1rem;
-    }
-
     .card {
-      width: min(760px, 92vw);
       background: var(--card);
       backdrop-filter: blur(8px);
       border-radius: 16px;
       padding: clamp(1.5rem, 2.5vw, 2rem);
-      text-align: center;
-
-      /* Center everything inside the card */
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.45),
+                  0 8px 10px -6px rgba(0,0,0,0.4);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      width: min(760px, 92vw);
     }
 
     .big-button {
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto; /* Ensures button stays centered */
+      margin: 0 auto;
       width: min(520px, 85vw);
       padding: clamp(0.75rem, 2.5vw, 1rem);
       border: none;
@@ -133,8 +129,7 @@
     }
 
     footer {
-      text-align: center;
-      padding: 1.25rem 1rem 2rem;
+      margin-top: 1.5rem;
       color: var(--muted);
       font-size: 0.9rem;
     }
@@ -147,108 +142,3 @@
         text-align: center;
       }
       .subtitle {
-        line-height: 1.25;
-      }
-      .big-button img {
-        width: min(360px, 80vw);
-        max-height: 280px;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <header>
-      <h1 class="title">Move Beyond Conference 2026</h1>
-      <p class="subtitle">
-        <span class="line1">Winning Hearts</span>
-        <span class="line2">by Creating Value</span>
-      </p>
-    </header>
-
-    <main>
-      <section class="card" aria-labelledby="cta-title">
-        <h2 id="cta-title" style="position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;">
-          Conference interaction
-        </h2>
-
-        <!-- Heart image button -->
-        <button id="actionBtn" class="big-button" type="button" aria-label="Click to participate in Conference 2026">
-          <img src="heart.png" alt="Heart icon for participation" />
-        </button>
-
-        <div class="counter" aria-live="polite" aria-atomic="true">
-          <div class="count-label">Total button clicks</div>
-          <div class="count-value" id="countValue">0</div>
-          <button class="reset" id="resetBtn" type="button" aria-label="Reset click counter">
-            Reset counter
-          </button>
-        </div>
-      </section>
-    </main>
-
-    <footer>
-      © 2026 Conference. All rights reserved.
-    </footer>
-  </div>
-
-  <script>
-    const STORAGE_KEY = "conference2026_click_count";
-    const countEl = document.getElementById("countValue");
-    const btn = document.getElementById("actionBtn");
-    const resetBtn = document.getElementById("resetBtn");
-    const subtitleEl = document.querySelector(".subtitle");
-
-    function getStoredCount() {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      const n = Number(raw);
-      return Number.isFinite(n) && n >= 0 ? n : 0;
-    }
-
-    function setStoredCount(n) {
-      localStorage.setItem(STORAGE_KEY, String(n));
-    }
-
-    function renderCount(n) {
-      countEl.textContent = n.toLocaleString();
-      const baseHTML = `
-        <span class="line1">Winning Hearts</span>
-        <span class="line2">by Creating Value</span>
-      `;
-      if (n === 0) {
-        subtitleEl.innerHTML = baseHTML;
-      } else {
-        subtitleEl.innerHTML = `
-          ${baseHTML}
-          <br>
-          <span style="font-size:1rem;color:#d1d5db;">Thanks for participating! ${n.toLocaleString()} clicks so far.</span>
-        `;
-      }
-    }
-
-    let count = getStoredCount();
-    renderCount(count);
-
-    btn.addEventListener("click", () => {
-      count += 1;
-      setStoredCount(count);
-      renderCount(count);
-
-      btn.animate(
-        [
-          { transform: "scale(1)" },
-          { transform: "scale(1.04)" },
-          { transform: "scale(1)" }
-        ],
-        { duration: 160, easing: "ease-out" }
-      );
-    });
-
-    resetBtn.addEventListener("click", () => {
-      count = 0;
-      setStoredCount(count);
-      renderCount(count);
-    });
-  </script>
-</body>
-</html>
