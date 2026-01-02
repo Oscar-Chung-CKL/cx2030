@@ -98,7 +98,8 @@
       filter: brightness(1.1);
     }
 
-    .big-button:active {
+    .big-button:active,
+    .big-button.pressed {
       transform: scale(0.95);
     }
 
@@ -207,6 +208,18 @@
       count = 0;
       countEl.textContent = '0';
     });
+
+    // Handle press animation manually for better mobile support
+    const addPress = () => btn.classList.add('pressed');
+    const removePress = () => btn.classList.remove('pressed');
+
+    btn.addEventListener('mousedown', addPress);
+    btn.addEventListener('mouseup', removePress);
+    btn.addEventListener('mouseleave', removePress);
+
+    btn.addEventListener('touchstart', addPress, { passive: true });
+    btn.addEventListener('touchend', removePress);
+    btn.addEventListener('touchcancel', removePress);
   </script>
 </body>
 </html>
