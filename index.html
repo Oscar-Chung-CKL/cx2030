@@ -1,20 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Move Beyond Conference 2026</title>
   <style>
     :root {
-      --bg: #005E62;                 /* Main background */
+      --bg: rgb(112, 43, 145);
+      /* Updated main background */
       --card: rgba(17, 24, 39, 0.75);
-      --button-bg: rgb(111,160,136); /* Button background */
-      --text: #ffffff;               /* General text */
+      --button-bg: rgb(111, 160, 136);
+      /* Button background */
+      --text: #ffffff;
+      /* General text */
       --muted: #d1d5db;
     }
 
-    * { box-sizing: border-box; }
-    html, body {
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
       height: 100%;
       margin: 0;
       background: var(--bg);
@@ -28,7 +37,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center; /* Vertical centering */
+      justify-content: center;
+      /* Vertical centering */
       text-align: center;
       padding: 1rem;
     }
@@ -55,6 +65,7 @@
       color: var(--text);
       display: inline-block;
     }
+
     .subtitle .line1,
     .subtitle .line2 {
       display: inline;
@@ -65,8 +76,8 @@
       backdrop-filter: blur(8px);
       border-radius: 16px;
       padding: clamp(1.5rem, 2.5vw, 2rem);
-      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.45),
-                  0 8px 10px -6px rgba(0,0,0,0.4);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.45),
+        0 8px 10px -6px rgba(0, 0, 0, 0.4);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -87,7 +98,7 @@
       background-color: transparent;
       cursor: pointer;
       transition: transform 120ms ease, filter 120ms ease, box-shadow 150ms ease;
-      box-shadow: 0 10px 18px rgba(0,0,0,0.35);
+      box-shadow: 0 10px 18px rgba(0, 0, 0, 0.35);
       touch-action: manipulation;
       -webkit-tap-highlight-color: transparent;
       user-select: none;
@@ -109,7 +120,7 @@
       max-width: min(420px, 80vw);
       height: auto;
       object-fit: contain;
-      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
     }
 
     .counter {
@@ -149,34 +160,38 @@
 
     /* Mobile adjustments */
     @media (max-width: 640px) {
+
       .subtitle .line1,
       .subtitle .line2 {
         display: block;
         text-align: center;
       }
+
       .subtitle {
         font-size: clamp(1.4rem, 5vw, 2rem);
       }
-      
+
       .big-button {
         padding: clamp(1.2rem, 6vw, 1.8rem);
       }
     }
   </style>
 </head>
+
 <body>
   <div class="container">
     <header>
-      <h1 class="title">Move Beyond Conference 2026</h1>
+      <!-- <h1 class="title">Move Beyond Conference 2026</h1> -->
       <div class="subtitle">
-        <span class="line1">Winning Hearts</span>
-        <span class="line2">by Creating Value</span>
+        <span class="line1">Onwards & Upwards</span>
+        <!-- <span class="line2">by Creating Value</span> -->
       </div>
     </header>
 
     <div class="card">
       <button class="big-button" id="register-btn">
-        <img src="heart.png" alt="Heart icon" />
+        <img src="sunny.png" alt="Heart icon" />
+        <!-- <img src="effect04.gif" alt="Heart icon" /> -->
       </button>
 
       <div class="counter">
@@ -196,14 +211,14 @@
     const countEl = document.getElementById('count');
     const btn = document.getElementById('register-btn');
     const resetBtn = document.getElementById('reset-btn');
-    
+
     let count = 0;
-    
+
     btn.addEventListener('click', () => {
       count++;
       countEl.textContent = count.toLocaleString();
     });
-    
+
     resetBtn.addEventListener('click', () => {
       count = 0;
       countEl.textContent = '0';
@@ -222,4 +237,5 @@
     btn.addEventListener('touchcancel', removePress);
   </script>
 </body>
+
 </html>
